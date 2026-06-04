@@ -1,9 +1,12 @@
+import Login from "./components/login/Login"
 
 
 function App() {
 
   return (
-    <div className="">Hello, World!</div>
+    <div>
+      <Login />
+    </div>
   )
 }
 
