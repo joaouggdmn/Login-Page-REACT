@@ -17,6 +17,9 @@ export default function App() {
         <NavLink to="/login" className={navLinkStyles}>
           Login
         </NavLink>
+        <NavLink to="/register" className={navLinkStyles}>
+          Cadastrar-se
+        </NavLink>
       </nav>
       <main>
         <Outlet />
