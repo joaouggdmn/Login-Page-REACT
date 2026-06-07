@@ -1,12 +1,35 @@
 import { FaUser, FaLock } from "react-icons/fa";
 import { useState } from "react";
+import Input from "../components/form/Input";
+import Button from "../components/form/Button";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthContext from "../hooks/useAuthContext";
 
-const Login = () => {
+function Login() {
+  const { signin } = useAuthContext();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      setError("Preencha todos os campos");
+      return;
+    }
+
+    const res = signin(email, password);
+    if (res) {
+      setError(res);
+      return;
+    }
+    navigate("/"); // A rota mapeada no seu main.jsx para Home é "/" e não "/home"
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleLogin(); // Conectando o evento de submit com a função que valida o login
   };
 
   return (
@@ -24,7 +47,8 @@ const Login = () => {
               Acesse o sistema
             </h2>
             <p className="text-sm text-slate-400">
-              Bem-vindo de volta! Por favor, insira suas credenciais para acessar sua conta.
+              Bem-vindo de volta! Por favor, insira suas credenciais para
+              acessar sua conta.
             </p>
           </div>
 
@@ -32,13 +56,11 @@ const Login = () => {
             <label className="space-y-2 text-sm font-medium text-slate-200">
               E-mail
               <div className="relative">
-                <input
+                <Input
                   type="email"
                   placeholder="voce@exemplo.com"
                   value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 pr-11 text-sm text-slate-100 outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/25"
+                  onChange={(e) => [setEmail(e.target.value), setError("")]}
                 />
                 <FaUser className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
               </div>
@@ -47,16 +69,17 @@ const Login = () => {
             <label className="space-y-2 text-sm font-medium text-slate-200">
               Senha
               <div className="relative">
-                <input
+                <Input
                   type="password"
                   placeholder="Digite sua senha"
                   value={password}
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 pr-11 text-sm text-slate-100 outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/25"
+                  onChange={(e) => [setPassword(e.target.value), setError("")]}
                 />
                 <FaLock className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
               </div>
+            </label>
+            <label>
+              {error && <span className="text-red-400">{error}</span>}
             </label>
           </div>
 
@@ -76,12 +99,7 @@ const Login = () => {
             </a>
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-2xl bg-blue-200 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/30 transition hover:-translate-y-0.5 hover:bg-cyan-300"
-          >
-            Entrar
-          </button>
+          <Button Text="Entrar" Type="submit" />
 
           <div className="text-center text-sm text-slate-400">
             Nao tem uma conta?{" "}
@@ -89,13 +107,13 @@ const Login = () => {
               href="#"
               className="font-semibold text-cyan-300 transition hover:text-cyan-200"
             >
-              Cadastre-se
+              <Link to="/register">Cadastre-se</Link>
             </a>
           </div>
         </form>
       </div>
     </div>
   );
-};
+}
 
 export default Login;
