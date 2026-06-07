@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const singin = (email, password) => {
+  const signin = (email, password) => {
     const userStorage = JSON.parse(localStorage.getItem("users_db"));
     const hasUser = userStorage?.filter((user) => user.email === email);
 
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const singup = (email, password) => {
+  const signup = (email, password) => {
     const userStorage = JSON.parse(localStorage.getItem("users_db"));
 
     const hasUser = userStorage?.filter((user) => user.email === email);
@@ -55,6 +55,11 @@ export function AuthProvider({ children }) {
     }
     localStorage.setItem("users_db", JSON.stringify(newUser));
     return "Usuário cadastrado com sucesso!";
+  };
+
+  const signout = () => {
+    localStorage.removeItem("user_Token");
+    setUser(null);
   };
 
   return <AuthContext.Provider>{children}</AuthContext.Provider>;
