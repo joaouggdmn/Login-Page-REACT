@@ -20,22 +20,42 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const singin = (email,password) => {
+  const singin = (email, password) => {
     const userStorage = JSON.parse(localStorage.getItem("users_db"));
     const hasUser = userStorage?.filter((user) => user.email === email);
 
     if (hasUser?.length) {
       if (hasUser[0].email === email && hasUser[0].password === password) {
-        const token = Math.random().toString(36).substring(2);  
+        const token = Math.random().toString(36).substring(2);
         localStorage.setItem("user_Token", JSON.stringify({ email, token }));
         setUser({ email, token });
         return;
-      }else{
+      } else {
         return "Email ou senha incorretos.";
       }
-    }else{
-        return "Usuário não encontrado.";
+    } else {
+      return "Usuário não encontrado.";
     }
-  }
+  };
+
+  const singup = (email, password) => {
+    const userStorage = JSON.parse(localStorage.getItem("users_db"));
+
+    const hasUser = userStorage?.filter((user) => user.email === email);
+
+    if (hasUser?.length) {
+      return "Já existe uma conta com esse email.";
+    }
+
+    let newUser;
+    if (userStorage) {
+      newUser = [...userStorage, { email, password }];
+    } else {
+      newUser = [{ email, password }];
+    }
+    localStorage.setItem("users_db", JSON.stringify(newUser));
+    return "Usuário cadastrado com sucesso!";
+  };
+
   return <AuthContext.Provider>{children}</AuthContext.Provider>;
 }
