@@ -5,7 +5,7 @@ export const AuthContext = createContext({});
 
 // Componente provedor que vai abraçar a nossa aplicação
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState( null );
 
   useEffect(() => {
     const userToken = localStorage.getItem("user_Token");

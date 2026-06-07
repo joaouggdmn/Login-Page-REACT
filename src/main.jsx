@@ -10,7 +10,7 @@ import Register from "./pages/Register.jsx";
 
 // Importações do sistema de Autenticação e Rotas Privadas
 import { AuthProvider } from "./contexts/AuthContext.jsx";
-import PrivateRoute from "./components/PrivateRoute.jsx";
+import PrivateRoute from "./routes/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
