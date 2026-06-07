@@ -21,8 +21,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signin = (email, password) => {
-    const userStorage = JSON.parse(localStorage.getItem("users_db"));
-    const hasUser = userStorage?.filter((user) => user.email === email);
+    const usersStorage = JSON.parse(localStorage.getItem("users_db"));
+    const hasUser = usersStorage?.filter((user) => user.email === email);
 
     if (hasUser?.length) {
       if (hasUser[0].email === email && hasUser[0].password === password) {
@@ -39,17 +39,17 @@ export function AuthProvider({ children }) {
   };
 
   const signup = (email, password) => {
-    const userStorage = JSON.parse(localStorage.getItem("users_db"));
+    const usersStorage = JSON.parse(localStorage.getItem("users_db"));
 
-    const hasUser = userStorage?.filter((user) => user.email === email);
+    const hasUser = usersStorage?.filter((user) => user.email === email);
 
     if (hasUser?.length) {
       return "Já existe uma conta com esse email.";
     }
 
     let newUser;
-    if (userStorage) {
-      newUser = [...userStorage, { email, password }];
+    if (usersStorage) {
+      newUser = [...usersStorage, { email, password }];
     } else {
       newUser = [{ email, password }];
     }
@@ -62,5 +62,11 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ user, signed: !!user, signin, signup, signout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
