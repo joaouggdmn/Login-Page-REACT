@@ -2,7 +2,7 @@ import { Outlet, NavLink } from "react-router-dom";
 import useAuthContext from "./hooks/useAuthContext";
 
 export default function App() {
-  const { isLogged, logout } = useAuthContext();
+  const { signed, signout } = useAuthContext();
 
   const navLinkStyles = ({ isActive }) =>
     `px-4 py-2 rounded-md transition-colors ${
@@ -17,9 +17,9 @@ export default function App() {
         <NavLink to="/" className={navLinkStyles}>
           Home
         </NavLink>
-        {isLogged ? (
+        {signed ? (
           <button
-            onClick={logout}
+            onClick={signout}
             className="px-4 py-2 rounded-md transition-colors text-red-400 hover:bg-red-900/50"
           >
             Sair (Logout)
