@@ -1,12 +1,21 @@
-function Input({ type, placeholder, value, onChange }) {
-    return (
-        <input
-            type={type}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            className="bg-gray-800 text-gray-300 placeholder:text-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-    );
+function Input({
+  type,
+  placeholder,
+  value,
+  onChange,
+  className = "",
+  ...props
+}) {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className={`w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-slate-100 shadow-sm outline-none transition duration-200 placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/15 ${className}`}
+      {...props}
+    />
+  );
 }
+
 export default Input;
