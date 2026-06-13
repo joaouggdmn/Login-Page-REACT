@@ -23,7 +23,7 @@ function Register() {
       return;
     }
 
-    const res = signup(email, password);
+    const res = signup(name, email, password);
 
     if (res !== "Usuário cadastrado com sucesso!") {
       setError(res);

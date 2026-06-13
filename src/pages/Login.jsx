@@ -24,7 +24,7 @@ function Login() {
       setError(res);
       return;
     }
-    navigate("/"); // A rota mapeada no seu main.jsx para Home é "/" e não "/home"
+    navigate("/"); // A rota mapeada no main.jsx para Home é "/" e não "/home"
   };
 
   const handleSubmit = (e) => {

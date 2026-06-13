@@ -1,17 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Button from "../components/form/Button";
 import useAuthContext from "../hooks/useAuthContext";
 
 function Home() {
-  const { signout } = useAuthContext();
-  const [user, setUser] = useState(null);
+  const { signout, user } = useAuthContext();
   const navigate = useNavigate();
-
-  useEffect(() =>{
-    const userStorage = JSON.parse(localStorage.getItem("users_db"));
-    setUser(userStorage);
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100">
@@ -21,7 +14,7 @@ function Home() {
             Home
           </h1>
           <p className="text-sm leading-6 text-slate-400">
-            {user?.name}
+            {user?.name} - {user?.email} - {user?.password} - {user?.token}
           </p>
 
           <Button Text="Sair" onClick={() => [signout(), navigate("/login")]} />

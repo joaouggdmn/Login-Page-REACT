@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
       );
 
       if (hasUser) {
-        setUser({ email: hasUser.email, token: parsedToken.token });
+        setUser({ name: hasUser.name, email: hasUser.email, token: parsedToken.token });
       }
     }
 
@@ -27,13 +27,15 @@ export function AuthProvider({ children }) {
 
   const signin = (email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_db"));
-    const hasUser = usersStorage?.find((storedUser) => storedUser.email === email);
+    const hasUser = usersStorage?.find(
+      (storedUser) => storedUser.email === email,
+    );
 
     if (hasUser) {
       if (hasUser.email === email && hasUser.password === password) {
         const token = Math.random().toString(36).substring(2);
         localStorage.setItem("user_Token", JSON.stringify({ email, token }));
-        setUser({ email, token });
+        setUser({ name: hasUser.name, email, token });
         return;
       }
 
@@ -43,17 +45,19 @@ export function AuthProvider({ children }) {
     return "Usuário não encontrado.";
   };
 
-  const signup = (email, password) => {
+  const signup = (name, email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_db"));
-    const hasUser = usersStorage?.find((storedUser) => storedUser.email === email);
+    const hasUser = usersStorage?.find(
+      (storedUser) => storedUser.email === email,
+    );
 
     if (hasUser) {
       return "Já existe uma conta com esse email.";
     }
 
     const newUser = usersStorage
-      ? [...usersStorage, { email, password }]
-      : [{ email, password }];
+      ? [...usersStorage, { name, email, password }]
+      : [{ name, email, password }];
 
     localStorage.setItem("users_db", JSON.stringify(newUser));
     return "Usuário cadastrado com sucesso!";
